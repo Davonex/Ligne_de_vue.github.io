@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'rajdhani';
+    src: url('../fonts/rajdhani.eot');
+    src: url('../fonts/rajdhani.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/rajdhani.woff2') format('woff2'),
+    url('../fonts/rajdhani.woff') format('woff'),
+    url('../fonts/rajdhani-medium.ttf') format('truetype'),
+    url('../fonts/rajdhani.svg#rajdhani') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: 'rajdhani', sans-serif;
+}
+.home h2 {
+    clear: both;
+}
+
+.home ul {
+    list-style-type: none;
+    clear: both;
+}
+
+.home li {
+    float : left;
+    margin-right: 25px;
+}
+
+.home a {
+    display: block;
+}

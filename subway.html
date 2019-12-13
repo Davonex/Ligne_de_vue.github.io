@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<!--VERSION 1.1-->
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Subway</title>
+
+        <link rel="stylesheet" type="text/css" href="assets/css/conan.css">
+
+        <script src="lib/jquery-3.1.1.js"></script>
+        <script src="lib/mapconan.js"></script>
+        <script src="lib/raphael.min.js"></script>
+
+        <script type="text/javascript">
+			
+			var colors = `{
+			   "1" : "#01A3D6",
+               "2" : "#CAE8FC",
+			   "3" : "#EFF976"
+            }`;
+			
+            var centers = `{
+                "street1"  : {"A":[49, 43],"promontory":false,"level":3},
+                "street2"  : {"A":[257, 44],"promontory":false,"level":3},
+                "street3"  : {"A":[475,66],"promontory":false,"level":3},
+                "street4"  : {"A":[726,43],"promontory":false,"level":3},
+                "street5"  : {"A":[984,67],"promontory":false,"level":3},
+                "street6"  : {"A":[1155,43],"promontory":false,"level":3},
+                "street7"  : {"A":[50,183],"promontory":false,"level":3},
+                "street8"  : {"A":[51,356],"B":[108,356],"promontory":false,"level":3},
+                "street9"  : {"A":[50,514],"promontory":false,"level":3},
+                "street10"  : {"A":[50,696],"B":[105,694],"promontory":false,"level":3},
+                "street11"  : {"A":[51,864],"promontory":false,"level":3},
+                "esc1"  : {"A":[276,207],"promontory":false,"level":2},
+                "pf1"  : {"A":[502,245],"promontory":false,"level":1},
+				"pf2"  : {"A":[240,332],"promontory":false,"level":1},
+                "pf3"  : {"A":[451,336],"promontory":false,"level":1},
+                "pf4"  : {"A":[650,369],"promontory":false,"level":1},
+                "pf5"  : {"A":[900,362],"promontory":false,"level":1},
+                "pf6"  : {"A":[901,255],"promontory":false,"level":1},
+                "pf7"  : {"A":[1079,358],"promontory":false,"level":1},
+                "pf8"  : {"A":[1165,448],"promontory":false,"level":1},
+                "road1"  : {"A":[986,452],"promontory":false,"level":1},
+                "road2"  : {"A":[804,478],"B":[666,480],"promontory":false,"level":1},
+                "road3"  : {"A":[525,506],"promontory":false,"level":1},
+                "road4"  : {"A":[239,560],"promontory":false,"level":1},
+                "pf9"  : {"A":[272,696],"promontory":false,"level":1},
+                "pf10"  : {"A":[429,672],"promontory":false,"level":1},
+                "pf11"  : {"A":[605,650],"promontory":false,"level":1},
+                "pf12"  : {"A":[820,674],"promontory":false,"level":1},
+                "pf13"  : {"A":[1039,682],"promontory":false,"level":1},
+                "pf14"  : {"A":[1160,591],"promontory":false,"level":1},
+                "pf15"  : {"A":[1172,683],"promontory":false,"level":1},
+                "pf16"  : {"A":[482,800],"promontory":false,"level":1},
+                "esc2"  : {"A":[275,837],"promontory":false,"level":2},
+                "int1"  : {"A":[597,302],"promontory":false,"level":1},
+                "int2"  : {"A":[1044,261],"promontory":false,"level":1},
+                "int3"  : {"A":[303,462],"promontory":false,"level":1},
+                "int4"  : {"A":[716,562],"promontory":false,"level":1},
+                "int5"  : {"A":[1006,589],"promontory":false,"level":1},
+                "int6"  : {"A":[542,747],"promontory":false,"level":1},
+                "int7"  : {"A":[727,819],"promontory":false,"level":1},
+                "int8"  : {"A":[891,797],"promontory":false,"level":1},
+                "int9"  : {"A":[1062,810],"promontory":false,"level":1}				
+            }`;
+
+             var lines = [
+
+                 {
+                     "line" : ['street1', 'street2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street1', 'street11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street2', 'street3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street2', 'street4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street2', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street2', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street3', 'street4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'street8-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'street10-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'pf1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'pf3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'road3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'pf9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'pf10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'pf16'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street3', 'esc2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street4', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street4', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street5', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'pf5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'pf6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'pf8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'pf14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'road1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'road2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street5', 'esc2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street7', 'street8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'street9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'street10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'street11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'esc1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'pf1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'pf3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'pf4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'pf7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'pf8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'road1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'road2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street7', 'road3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				
+				 {
+                     "line" : ['street8', 'street9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8', 'street10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8', 'street11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'esc1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'pf16'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'road1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street8-B', 'road4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+                 {
+                     "line" : ['street9', 'street10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street9', 'street11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street10', 'street11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'road3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'road4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'pf16'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street10-B', 'esc2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['street11', 'pf7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'pf8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'pf10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'pf11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'pf16'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'esc2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['street11', 'road3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['esc1', 'pf1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['esc1', 'pf2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['esc1', 'pf3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['esc1', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['esc1', 'esc2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf1', 'pf2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf1', 'pf3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf1', 'pf16'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf1', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf2', 'pf3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'pf4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'pf5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'pf7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf2', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf3', 'pf4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'pf5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'pf7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf3', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf4', 'pf5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'pf7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'pf9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'pf10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf4', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['esc2', 'pf4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf5', 'pf6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf5', 'pf7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf5', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf5', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf5', 'road2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf5', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+
+				 {
+                     "line" : ['pf6', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf6', 'pf9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf6', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf6', 'road2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf6', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf7', 'pf8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf7', 'pf14'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf7', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf7', 'road2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf7', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+
+				 {
+                     "line" : ['pf8', 'pf14'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf8', 'road1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf8', 'road2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf8', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },		
+
+				 {
+                     "line" : ['road1', 'road2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road1', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['road2-B', 'road3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road2-B', 'road4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['road3', 'pf9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road3', 'pf10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road3', 'pf16'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['esc2', 'road3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road3', 'road4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['road4', 'pf9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road4', 'pf10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road4', 'pf11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road4', 'pf12'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road4', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['road4', 'pf16'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['esc2', 'road4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf9', 'pf10'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf9', 'pf11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf9', 'pf12'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf9', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf9', 'pf15'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf9', 'pf16'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['esc2', 'pf9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf10', 'pf11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf10', 'pf12'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf10', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf10', 'pf15'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf10', 'pf16'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['esc2', 'pf10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf11', 'pf12'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf11', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf11', 'pf15'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf12', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf12', 'pf15'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['pf13', 'pf14'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['pf13', 'pf15'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['esc2', 'pf16'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['int1', 'pf4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int2', 'pf6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int3', 'road4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int4', 'road2-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int4', 'int5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int5', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int5', 'pf14'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int6', 'pf11'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int6', 'int7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int8', 'int9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['int9', 'pf13'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 }
+            ];
+
+            $(window).on("load", function() {
+                new Conan(centers, lines,colors);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="options">
+            <ul>
+				<li>
+					<form>
+						<input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Afficher lignes</label>
+						<input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Afficher zones</label>
+						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
+						<input type="checkbox" id="display-promontory" name="display-promontory"/><label for="display-promontory">Afficher promontoire</label>
+                        <input type="checkbox" id="display-level" name="display-level"/><label for="display-level">Afficher niveaux</label>
+					</form>
+				</li>
+        </div>
+        <div>
+            <img id="mapimage" src="assets/maps/subway.png" id="" usemap="#map" />
+            <map name="map" id="map">
+				<area alt="" title="" href="#" shape="poly" id="street1"  coords="2,3,156,4,156,77,69,82,70,90,112,124,3,128" />
+				<area alt="" id="street2" title="" href="#" coords="158,2,157,77,376,73,377,1" shape="poly"/>
+				<area alt="" id="street3" title="" href="#" coords="378,3,378,73,416,77,435,126,521,128,507,93,509,82,558,76,558,2" shape="poly"/>	
+				<area alt="" id="street4" title="" href="#" coords="559,2,561,78,895,77,894,1" shape="poly"/>
+				<area alt="" id="street5" title="" href="#" coords="895,1,895,77,926,77,929,87,910,129,1023,131,1074,80,1100,80,1100,2" shape="poly"/>
+				<area alt="" id="street6" title="" href="#" coords="1100,2,1101,77,1214,77,1214,1" shape="poly"/>
+				<area id="street7" alt="" title="" href="" coords="-1,127,111,126,124,135,133,136,134,228,126,222,120,220,108,218,82,203,81,256,2,258" shape="poly">
+				<area id="street8" alt="" title="" href="" coords="0,260,78,260,80,299,112,318,128,319,129,401,97,394,77,392,77,415,-1,415" shape="poly">
+				<area id="street9" alt="" title="" href="" coords="-1,417,77,418,79,614,-1,616" shape="poly">
+				<area id="street10" alt="" title="" href="" coords="0,616,77,617,78,638,131,639,135,657,133,667,125,675,126,689,122,705,125,717,127,732,112,740,82,753,81,787,2,788" shape="poly">
+				<area id="street11" alt="" title="" href="" coords="2,788,79,789,81,831,86,829,127,809,128,909,0,908" shape="poly">
+				<area id="esc1" alt="" title="" href="" coords="134,130,177,124,210,135,391,193,392,278,306,258,228,239,189,228,134,231" shape="poly">
+				<area id="pf1" alt="" title="" href="" coords="392,193,391,280,399,281,434,281,532,307,535,196" shape="poly">
+				<area id="pf2" alt="" title="" href="" coords="366,287,365,411,184,418,187,409,195,399,207,401,209,363,206,290,198,276,204,260,217,251" shape="poly">
+				<area id="pf3" alt="" title="" href="" coords="365,288,434,284,533,310,535,325,561,326,550,409,367,410" shape="poly">
+				<area id="pf4" alt="" title="" href="" coords="563,325,614,325,614,332,762,327,774,409,553,411" shape="poly">
+				<area id="pf5" alt="" title="" href="" coords="766,329,785,326,802,302,804,296,995,302,997,316,1019,315,1029,409,780,409" shape="poly">
+				<area id="pf6" alt="" title="" href="" coords="806,198,995,205,996,255,997,279,997,298,805,294" shape="poly">
+				<area id="pf7" alt="" title="" href="" coords="1022,315,1135,313,1117,412,1031,411" shape="poly">
+				<area id="pf8" alt="" title="" href="" coords="1139,313,1213,310,1214,564,1106,553,1117,536,1101,530" shape="poly">
+				<area id="road1" alt="" title="" href="" coords="867,413,1117,413,1101,529,1035,531,999,539,964,539,923,530,905,525,841,523" shape="poly">
+				<area id="road2" alt="" title="" href="" coords="584,413,864,413,837,521,783,521,773,516,758,516,751,516,721,516,715,525,688,526,687,512,600,508" shape="poly">
+				<area id="road3" alt="" title="" href="" coords="464,413,583,413,597,508,566,509,550,527,545,552,543,576,550,593,555,604,446,605,447,521,467,511,473,490,478,479,479,464,473,435,468,425" shape="poly">
+				<area id="road4" alt="" title="" href="" coords="172,525,381,519,419,517,444,518,442,604,190,604,180,591,171,568,168,547" shape="poly">
+				<area id="pf9" alt="" title="" href="" coords="192,607,350,607,332,764,210,766,217,717,214,685,214,659,212,638,210,629,198,619" shape="poly">
+				<area id="pf10" alt="" title="" href="" coords="350,607,519,607,528,693,514,695,504,708,423,767,334,766" shape="poly">
+				<area id="pf11" alt="" title="" href="" coords="520,608,644,607,657,615,718,619,675,695,580,695,553,695,530,693,523,631" shape="poly">
+				<area id="pf12" alt="" title="" href="" coords="677,693,718,620,912,637,941,713,941,750,686,757,685,714" shape="poly">
+				<area id="pf13" alt="" title="" href="" coords="915,637,1023,645,1074,652,1079,648,1130,663,1131,705,1052,714,1016,712,944,714" shape="poly">
+				<area id="pf14" alt="" title="" href="" coords="1108,555,1213,565,1212,628,1152,630,1135,661,1083,646,1095,631,1079,628,1095,575,1100,571" shape="poly">
+				<area id="pf15" alt="" title="" href="" coords="1135,664,1154,632,1214,632,1215,705,1132,706" shape="poly">
+				<area id="pf16" alt="" title="" href="" coords="377,774,421,770,504,715,502,856,377,858" shape="poly">
+				<area id="esc2" alt="" title="" href="" coords="129,808,184,812,373,777,373,857,180,906,128,907" shape="poly">
+				<area id="int1" alt="" title="" href="" coords="587,320,584,296,547,295,548,208,779,211,784,295,614,297,614,319" shape="poly">
+				<area id="int2" alt="" title="" href="" coords="998,253,1030,230,1030,210,1160,209,1178,284,1029,288,1028,258,1000,275" shape="poly">
+				<area id="int3" alt="" title="" href="" coords="180,431,413,422,413,476,403,480,403,487,413,512,386,515,377,481,206,486,198,498,186,497,171,497,172,465" shape="poly">
+				<area id="int4" alt="" title="" href="" coords="609,512,648,515,661,522,683,525,718,530,722,537,740,538,825,538,821,595,596,581,601,577" shape="poly">
+				<area id="int5" alt="" title="" href="" coords="827,538,1096,555,1079,626,1048,619,1028,633,1023,639,995,637,1002,620,1006,614,1001,607,953,603,822,594" shape="poly">
+				<area id="int6" alt="" title="" href="" coords="514,717,547,712,555,697,579,700,578,714,675,720,674,774,673,809,674,860,513,865" shape="poly">
+				<area id="int7" alt="" title="" href="" coords="675,779,683,790,691,781,821,781,821,865,688,865,687,822,677,809" shape="poly">
+				<area id="int8" alt="" title="" href="" coords="836,781,939,780,943,805,943,848,830,846,829,811" shape="poly">
+				<area id="int9" alt="" title="" href="" coords="943,784,945,807,980,824,980,866,1212,865,1211,733,1092,733,1050,716,1020,714,1053,731,980,733,980,776,978,798,962,794,950,788" shape="poly">
+            </map>
+        </div>
+    </body>
+</html>

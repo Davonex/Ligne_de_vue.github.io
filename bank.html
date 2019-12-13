@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<!--VERSION 1.1-->
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Bank</title>
+
+        <link rel="stylesheet" type="text/css" href="assets/css/conan.css">
+
+        <script src="lib/jquery-3.1.1.js"></script>
+        <script src="lib/mapconan.js"></script>
+        <script src="lib/raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+			var colors = `{
+			   "1" : "#01A3D6",
+               "2" : "#CAE8FC"
+            }`;
+			
+            var centers = `{
+                "int1"  : {"A":[ 160,208],"promontory":false,"level":1},
+                "int2"  : {"A":[ 215,281],"promontory":false,"level":1},
+                "int3"  : {"A":[ 215,392],"promontory":false,"level":1},
+                "int4"  : {"A":[ 598,131],"promontory":false,"level":1},
+                "int5"  : {"A":[ 1093,172],"promontory":false,"level":1},
+                "int6"  : {"A":[ 1034,279],"promontory":false,"level":1},
+                "int7"  : {"A":[ 936,375],"promontory":false,"level":1},
+                "int8"  : {"A":[ 1093,384],"promontory":false,"level":1},
+                "hall1"  : {"A":[ 350,158],"promontory":false,"level":1},
+                "hall2"  : {"A":[ 462,263],"promontory":false,"level":1},
+                "hall3"  : {"A":[ 619,263],"promontory":false,"level":1},
+                "hall4"  : {"A":[ 829,249],"promontory":false,"level":1},
+                "hall5"  : {"A":[ 885,140],"promontory":false,"level":1},
+                "hall6"  : {"A":[ 298,361],"promontory":false,"level":1},
+                "hall7"  : {"A":[ 429,379],"promontory":false,"level":1},
+                "hall8"  : {"A":[ 604,361],"promontory":false,"level":1},
+                "hall9"  : {"A":[ 794,359],"promontory":false,"level":1},
+                "trot1"  : {"A":[ 114,605],"promontory":false,"level":1},
+                "trot2"  : {"A":[ 328,563],"promontory":false,"level":1},
+                "trot3"  : {"A":[ 594,563],"promontory":false,"level":1},
+                "trot4"  : {"A":[ 919,566],"promontory":false,"level":1},
+                "trot5"  : {"A":[ 1059,564],"promontory":false,"level":1},
+                "street1"  : {"A":[ 127,758],"promontory":false,"level":1},
+                "street2"  : {"A":[ 210,772],"promontory":false,"level":1},
+                "street3"  : {"A":[419,684],"B":[419,818],"promontory":false,"level":1},
+                "street4"  : {"A":[ 707,788],"promontory":false,"level":1},
+                "street5"  : {"A":[ 641,884],"promontory":false,"level":1},
+                "street6"  : {"A":[ 863,708],"promontory":false,"level":1},
+                "street7"  : {"A":[ 982,873],"promontory":false,"level":1},
+                "street8"  : {"A":[1129,667],"B":[1149,878],"promontory":false,"level":1},
+                "car1"  : {"A":[ 309,749],"promontory":true,"level":2},
+                "car2"  : {"A":[ 372,893],"promontory":true,"level":2},
+                "car3"  : {"A":[ 601,796],"promontory":true,"level":2},
+                "car4"  : {"A":[ 647,659],"promontory":true,"level":2},
+                "car5"  : {"A":[ 974,797],"promontory":true,"level":2}
+            }`;
+
+             var lines = [
+			 
+                 {
+                     "line" : ['int1', 'hall1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int2', 'hall6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int3', 'hall6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int4', 'hall3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int5', 'hall5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int6', 'hall5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int7', 'int8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['int7', 'hall9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall1', 'hall2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall1', 'hall3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall1', 'hall6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall2', 'hall3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall2', 'hall4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall3', 'hall4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall3', 'hall5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall4', 'hall5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall6', 'hall7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall7', 'hall8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall7', 'hall9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['hall8', 'hall9'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['hall8', 'trot3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'hall8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['trot1', 'trot2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'trot3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'trot4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'trot5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'street1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'street2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot1', 'street3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'trot1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'trot1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'trot1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'trot1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'trot1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['trot2', 'trot3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot2', 'trot4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot2', 'trot5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot2', 'street1'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot2', 'street3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'trot2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'trot2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'trot2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'trot2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'trot2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['trot3', 'trot4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot3', 'trot5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot3', 'street3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot3', 'street8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'trot3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'trot3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['trot4', 'trot5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot4', 'street4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot4', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot4', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot4', 'street8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'trot4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'trot4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'trot4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'trot4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['trot5', 'street4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot5', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot5', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['trot5', 'street8'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'trot5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'trot5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'trot5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'trot5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['street1', 'street2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street1', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street1', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street1', 'street7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['street2', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street2', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street2', 'street7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['street3-B', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street3-A'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street3-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },		 
+				 {
+                     "line" : ['street4', 'street5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street4', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street4', 'street8-A'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+				 {
+                     "line" : ['street5', 'street6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street5', 'street7'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['street5', 'street8-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['street6', 'street8-A'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['street7', 'street8-B'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car1', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street8-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car4', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car5', 'street8-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car1', 'car2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'car3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'car4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car1', 'car5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car2', 'car3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'car4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'car5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car3', 'car4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car3', 'car5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['car4', 'car5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 }
+
+            ];
+
+            $(window).on("load", function() {
+                new Conan(centers, lines,colors);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="options">
+            <ul>
+				<li>
+					<form>
+						<input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Afficher lignes</label>
+						<input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Afficher zones</label>
+						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
+						<input type="checkbox" id="display-promontory" name="display-promontory"/><label for="display-promontory">Afficher promontoire</label>
+                        <input type="checkbox" id="display-level" name="display-level"/><label for="display-level">Afficher niveaux</label>
+					</form>
+				</li>
+        </div>
+        <div>
+            <img id="mapimage" src="assets/maps/bank.png" id="" usemap="#map" />
+            <map name="map" id="map">
+				<area id="int1" alt="" title="" href="" coords="11,13,223,12,223,101,261,135,261,180,231,162,223,162,223,232,12,233" shape="poly">
+				<area id="int2" alt="" title="" href="" coords="12,242,223,242,223,283,261,300,261,343,226,333,225,358,12,357" shape="poly">
+				<area id="int3" alt="" title="" href="" coords="11,364,223,363,223,402,261,408,261,453,223,454,223,466,11,466" shape="poly">
+				<area id="int4" alt="" title="" href="" coords="485,15,730,15,730,143,626,144,621,182,581,180,577,144,486,142" shape="poly">
+				<area id="int5" alt="" title="" href="" coords="1074,14,1199,14,1200,184,1074,184,1075,125,1025,154,1026,111,1075,71" shape="poly">
+				<area id="int6" alt="" title="" href="" coords="925,191,969,191,940,218,983,219,1030,191,1198,192,1199,318,925,318" shape="poly">
+				<area id="int7" alt="" title="" href="" coords="926,329,1065,329,1065,387,1022,394,1023,448,1065,449,1065,464,925,466,923,436,893,437,894,396,926,386" shape="poly">
+				<area id="int8" alt="" title="" href="" coords="1026,399,1074,391,1075,329,1199,329,1199,465,1074,465,1075,446,1026,444" shape="poly">
+				<area id="hall1" alt="" title="" href="" coords="264,55,272,50,280,45,294,50,307,56,395,60,394,131,468,136,469,156,483,185,345,252,316,234,293,234,289,243,306,255,276,258,266,249" shape="poly">
+				<area id="hall2" alt="" title="" href="" coords="529,173,528,190,532,205,532,303,345,302,346,258,489,188,493,173" shape="poly">
+				<area id="hall3" alt="" title="" href="" coords="531,172,569,172,570,189,579,187,622,189,647,188,657,182,688,179,709,179,721,182,723,194,723,302,534,303" shape="poly">
+				<area id="hall4" alt="" title="" href="" coords="724,188,731,189,738,170,887,215,887,300,726,302" shape="poly">
+				<area id="hall5" alt="" title="" href="" coords="741,165,747,155,747,58,1022,59,1021,183,983,213,947,211,979,187,918,185,886,212" shape="poly">
+				<area id="hall6" alt="" title="" href="" coords="265,262,309,261,309,385,339,391,338,434,309,436,309,464,266,464" shape="poly">
+				<area id="hall7" alt="" title="" href="" coords="340,390,330,384,329,354,332,338,522,338,524,465,343,466" shape="poly">
+				<area id="hall8" alt="" title="" href="" coords="526,338,687,340,689,466,650,467,648,475,562,474,562,465,526,464" shape="poly">
+				<area id="hall9" alt="" title="" href="" coords="689,340,886,340,888,392,889,439,888,464,692,465" shape="poly">
+				<area id="trot1" alt="" title="" href="" coords="0,476,101,476,102,503,133,504,183,494,182,478,210,477,211,628,0,629" shape="poly">
+				<area id="trot2" alt="" title="" href="" coords="214,477,244,477,244,503,278,502,311,498,309,481,384,479,386,506,417,502,435,495,437,479,451,477,462,628,214,626" shape="poly">
+				<area id="trot3" alt="" title="" href="" coords="456,477,527,478,528,503,558,503,561,479,651,477,652,502,686,502,685,477,700,477,705,599,547,628,464,626" shape="poly">
+				<area id="trot4" alt="" title="" href="" coords="702,477,777,477,781,494,794,502,828,502,828,477,904,480,904,495,936,503,967,505,969,477,1022,625,734,625,728,595,707,599" shape="poly">
+				<area id="trot5" alt="" title="" href="" coords="975,477,1031,480,1031,498,1078,503,1111,502,1110,479,1212,478,1213,625,1026,624" shape="poly">
+				<area id="street1" alt="" title="" href="" coords="0,631,270,631,229,664,222,667,215,678,203,693,197,717,199,729,120,907,-1,908" shape="poly">
+				<area id="street2" alt="" title="" href="" coords="124,907,202,730,342,797,350,794,369,838,244,820,227,905" shape="poly">
+				<area id="street3" alt="" title="" href="" coords="234,664,271,631,541,632,528,636,536,690,498,741,490,755,485,773,484,787,490,809,467,852,373,838,352,790,373,736,360,726,336,710,321,704,288,690" shape="poly">
+				<area id="street4" alt="" title="" href="" coords="502,739,536,696,541,722,738,693,743,684,820,769,803,776,794,789,809,855,658,821,665,768,659,755" shape="poly">
+				<area id="street5" alt="" title="" href="" coords="471,854,493,813,570,824,654,832,658,825,742,843,773,910,463,910,473,872,475,861" shape="poly">
+				<area id="street6" alt="" title="" href="" coords="737,631,970,629,1013,712,970,723,958,723,943,725,933,734,893,747,890,755,882,756,863,759,863,768,847,765,825,768,744,683" shape="poly">
+				<area id="street7" alt="" title="" href="" coords="744,843,807,859,818,871,831,876,837,869,894,852,900,855,920,852,932,854,962,849,1043,824,1048,908,777,907" shape="poly">
+				<area id="street8" alt="" title="" href="" coords="975,629,1213,627,1215,907,1052,907,1047,823,1057,811,1052,786,1043,756,1022,711,1014,711" shape="poly">
+				<area id="car1" alt="" title="" href="" coords="227,670,365,737,357,765,343,791,315,777,303,770,257,747,242,745,201,726" shape="poly">
+				<area id="car2" alt="" title="" href="" coords="231,910,245,825,284,830,321,837,390,846,406,853,425,849,468,857,451,910" shape="poly">
+				<area id="car3" alt="" title="" href="" coords="501,741,657,757,651,826,625,824,600,817,561,813,538,815,493,806" shape="poly">
+				<area id="car4" alt="" title="" href="" coords="533,643,561,638,583,630,709,606,727,600,742,681,733,690,591,710,568,713,546,718,536,679" shape="poly">
+				<area id="car5" alt="" title="" href="" coords="799,791,808,778,822,781,842,778,852,772,863,779,897,771,894,751,927,738,939,741,960,736,975,725,1021,714,1053,809,1043,820,933,851,893,850,842,864,829,873,815,865" shape="poly">
+            </map>
+        </div>
+    </body>
+</html>

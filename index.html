@@ -1,0 +1,46 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Hello World</title>
+	<link rel="stylesheet" type="text/css" href="css/zombinvasion.css">
+</head>
+<body>
+<div id="options">
+		<ul>
+			<li><input type="checkbox" id="S1" value="0"><label for="S1">Zombicide</label></li>
+			<li><input type="checkbox" id="S2" value="1"><label for="S2">Walk of the Dead</label></li>
+			<li><input type="checkbox" id="S3" value="2"><label for="S3">Zombie Dogz</label></li>
+			<li><input type="checkbox" id="S4" value="3"><label for="S4">Toxic City Mall</label></li>
+		</ul>
+</div>
+
+
+<div class="totaux">
+	<ul>
+		<li><label for="reste">Nbr de cartes : </label><input type="text" id="reste" value="0" disabled ></input></li>
+	</ul>	
+</div>
+
+<div id="navigation">
+	<ul>
+		<li><input type="button" id="Pre" value="0" value="Pre"></li>
+		<li><input type="button" id="Pre" value="0" value="Sui"></li>
+		<li><input type="button" id="Pre" value="0" value="Stop"></li>
+	</ul>
+</div>
+
+
+<div id="Pioche" >
+    <ul>
+		<li><img  id="recto" class="carte" src="img/recto.jpg"></li>
+	</ul>
+</div>
+
+
+
+	<!-- ceci est votre template de base -->
+	<script type="text/javascript" src="lib/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="lib/zombinvasion.js"  charset="utf-8"></script>
+	
+</body>
+</html>

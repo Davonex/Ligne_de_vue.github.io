@@ -11,26 +11,91 @@
     margin-right: 25px;
 }
 
-#navigation {
-	float : none
+#navigation li {
+	float : left;
+    margin-right: 25px;
 }
-		
-		
-#Pioche{
-    position:relative;
-    height:200px;
-    width:700px;
-    margin:auto;
-}
+
 ul {
  list-style-type: none;
 }
-
-#Pioche ul li img{
+		
+		
+ #Pioche{
     position:absolute;
-    top:0;
-    left:0;
-	height:320px;
-    width:210px;
+	display: none;
 }
 
+
+#Defausse img:last-child {
+	position:absolute;
+	top: 150px;
+	left:650px;
+	background-color: #F2F2F2;
+    padding: 0px;
+    position: absolute;
+    box-shadow: 0px 25px 19px -18px #545454;
+}
+
+#Defausse img{
+    position:relative;
+	top:500px;
+	left:50px;
+
+}
+
+
+.carte {
+	height:320px;
+    width:210px;
+	border-radius: 10px;
+}
+
+#Pioche {
+	Z-index : -1;
+}
+
+/* Animation des Cartes
+
+*/
+
+
+#Animation, #Defausse
+{  
+ position: absolute;
+ top : 150px;
+
+}
+
+#rectoToverso
+{
+    /* margin-top: 50px; */
+    perspective: 900px;  
+    transform-style: preserve-3d; 
+    
+}
+
+#rectoToverso .recto, #rectoToverso .verso, #rectoToverso .fix
+{ 
+    /* background-color: #F2F2F2; */
+    padding: 0px;
+    position: absolute;
+    transition: transform 1s ease-in-out;   
+    backface-visibility: hidden;
+    /* box-shadow: 0px 25px 19px -18px #545454;   */
+		/* border: solid 2px; */
+}
+
+
+
+#rectoToverso .verso
+{  
+    transform: rotateY(180deg);
+	transform-origin: 0% 0%;
+	left: 250px;
+}
+#rectoToverso .recto
+{  
+    transform: rotateY(0deg);
+	transform-origin: 100% 100%;
+}

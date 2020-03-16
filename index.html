@@ -6,17 +6,12 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/chosen.css">
 </head>
 <body>
+<div class="header">
 <div id="options">
-		<!-- <ul> -->
-			<!-- <li><input type="checkbox" id="S1" value="0" checked><label for="S1">Zombicide</label></li> -->
-			<!-- <li><input type="checkbox" id="S2" value="1"><label for="S2">Walk of the Dead</label></li> -->
-			<!-- <li><input type="checkbox" id="S3" value="2"><label for="S3">Zombie Dogz</label></li> -->
-			<!-- <li><input type="checkbox" id="S4" value="3"><label for="S4">Toxic City Mall</label></li> -->
-
-		<!-- </ul> -->
-		<select data-placeholder="Choose a Set..." multiple class="chosen-select" tabindex="-1" style="display: none;">
-                    <option value="0" selected>S1: Zombicide</option>
-		    <option value="1">WALK OF THE DEAD	</option>
+		<label for="multiple-label-example">Click to Highlight Multiple Select</label>
+		<select data-placeholder="Choose a Set..." multiple class="chosen-select" tabindex="-1" id="multiple-select-set" style="display: none;">
+                    <option value="0" selected>S1: ZOMBICIDE</option>
+					<option value="1">WALK OF THE DEAD	</option>
                     <option value="2">ZOMBIE DOGS	</option>
                     <option value="3">TOXIC CITY MALL</option>
                     <option value="4">S2: PRISON OUTBREAK</option>
@@ -33,7 +28,7 @@
 		<div class="chosen-container chosen-container-multi" title="" style="width: 350px;">
 			<div class="chosen-drop">
 				<ul class="chosen-results">
-					<li class="active-result" data-option-array-index="1">SEASON 1</li>		
+					<li class="active-result" data-option-array-index="1">S1: ZOMBICIDE</li>		
 					<li class="active-result" data-option-array-index="2">WALK OF THE DEAD</li>
 					<li class="active-result" data-option-array-index="3">ZOMBIE DOGS</li>		
 					<li class="active-result" data-option-array-index="4">TOXIC CITY MALL</li>		
@@ -48,47 +43,51 @@
 					<li class="active-result" data-option-array-index="13">VIP #2</li>	
 					<li class="active-result" data-option-array-index="14">MURDER OF CROWZ</li>	
 			</div>
-		</div>
-		
-</div>
+		</div>	
+		</select>
+	<button type="button" id="start">Start</button>
+	
+</div> <!-- End option -->
 
 
-<div id="totaux">
-	<ul>
-		<li><label for="reste">Nbr de cartes : </label><input type="text" id="reste" value="0" disabled ></input></li>
-	</ul>	
+<div id="totaux">	
+		<input type="text" id="current" value="0" disabled ></input>
+		/
+		<input type="text" id="max" value="0" disabled ></input>		
 </div>
 
 <div id="navigation">
 	<ul>
-		<li><button type="button" id="start">Start</button></li>
 		<li><button type="button" id="pre" disabled>Précedent</button></li>
 		<li><button type="button" id="sui" disabled>Suivant</button></li>
 		<li><button type="button" id="fin" disabled>Fin apparition</button></li>
 	</ul>
 </div>
+</div>
 
 
-<div id="Animation">
-    <ul id="rectoToverso">
-	<li class="fix"><img  class="carte" src="assets/images/recto.jpg"></li>
-    	<li class="recto"><img  class="carte" src="assets/images/recto.jpg"></li>
-        <li class="verso"></li>    
-    </ul>
+<div id="Pioche"></div>
+
+
+
+<div id="Conteneur_Animation">
+	<div class="dos"><img  class="carte" src="assets/images/recto.jpg"></div>
+	<div id="Animation">
+		<div class="front"><img  class="carte" src="assets/images/recto.jpg"></div>
+		<div class="back"></div>
+		<!-- <img id="carte_16" class="carte" src="img/spawn/16.jpg"> -->
+	</div>
+	<!-- <div class="fin"></div> -->
 </div>
 
 
 
 
-
-<div id="Pioche"></div>
-
 <div id="Defausse"></div>
 
 
 	<!-- ceci est votre template de base -->
-	<!-- <script type="text/javascript" src="lib/jquery-3.4.1.js"></script> -->
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-3.4.1.js"></script>
 	<script type="text/javascript" src="lib/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="lib/zombinvasion.js"  charset="utf-8"></script>
 	<script type="text/javascript" >

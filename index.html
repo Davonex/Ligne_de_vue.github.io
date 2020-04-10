@@ -6,92 +6,110 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/chosen.css">
 </head>
 <body>
-<div class="header">
-<div id="options">
-		<label for="multiple-label-example">Click to Highlight Multiple Select</label>
-		<select data-placeholder="Choose a Set..." multiple class="chosen-select" tabindex="-1" id="multiple-select-set" style="display: none;">
-                    <option value="0" selected>S1: ZOMBICIDE</option>
-					<option value="1">WALK OF THE DEAD	</option>
-                    <option value="2">ZOMBIE DOGS	</option>
-                    <option value="3">TOXIC CITY MALL</option>
-                    <option value="4">S2: PRISON OUTBREAK</option>
-                    <option value="5">WALK OF THE DEAD #2</option>
-                    <option value="6">TOXIC CROWD</option>
-                    <option value="7">ANGRY ZOMBIES</option>
-                    <option value="8">S3: RUE MORGUE</option>
-                    <option value="9">ANGRY NEIGHBORS</option>
-                    <option value="10">LOST ZOMBIVORS</option>
-                    <option value="11">VIP #1</option>
-                    <option value="12">VIP #2</option>
-                    <option value="13">MURDER OF CROWZ</option>
-          </select>
-		<div class="chosen-container chosen-container-multi" title="" style="width: 350px;">
-			<div class="chosen-drop">
-				<ul class="chosen-results">
-					<li class="active-result" data-option-array-index="1">S1: ZOMBICIDE</li>		
-					<li class="active-result" data-option-array-index="2">WALK OF THE DEAD</li>
-					<li class="active-result" data-option-array-index="3">ZOMBIE DOGS</li>		
-					<li class="active-result" data-option-array-index="4">TOXIC CITY MALL</li>		
-					<li class="active-result" data-option-array-index="5">S2: PRISON OUTBREAK</li>	
-					<li class="active-result" data-option-array-index="6">WALK OF THE DEAD #2</li>	
-					<li class="active-result" data-option-array-index="7">TOXIC CROWD</li>		
-					<li class="active-result" data-option-array-index="8">ANGRY ZOMBIES</li>	
-					<li class="active-result" data-option-array-index="9">S3: RUE MORGUE</li>		
-					<li class="active-result" data-option-array-index="10">ANGRY NEIGHBORS</li>	
-					<li class="active-result" data-option-array-index="11">LOST ZOMBIVORS</li>	
-					<li class="active-result" data-option-array-index="12">VIP #1</li>	
-					<li class="active-result" data-option-array-index="13">VIP #2</li>	
-					<li class="active-result" data-option-array-index="14">MURDER OF CROWZ</li>	
-			</div>
-		</div>	
-		</select>
-	<button type="button" id="start">Start</button>
+<div id="espace-start">
+
+	<h1>ZOMBIvasion</h1>
 	
-</div> <!-- End option -->
+	<div id="SelectMulti">
+			<!-- <label for="multiple-select-set">Selection des Decks</label> -->
+			<select data-placeholder="Choisir un deck" multiple tabindex="-1" id="start-select" style="display: none;">
+						<option value="0">S1: ZOMBICIDE</option>
+						<option value="1">WALK OF THE DEAD	</option>
+						<option value="2">ZOMBIE DOGS	</option>
+						<option value="3">TOXIC CITY MALL</option>
+						<option value="4">S2: PRISON OUTBREAK</option>
+						<option value="5">WALK OF THE DEAD #2</option>
+						<option value="6">TOXIC CROWD</option>
+						<option value="7">ANGRY ZOMBIES</option>
+						<option value="8">S3: RUE MORGUE</option>
+						<option value="9">ANGRY NEIGHBORS</option>
+						<option value="10">LOST ZOMBIVORS</option>
+						<option value="11">VIP #1</option>
+						<option value="12">VIP #2</option>
+						<option value="13">MURDER OF CROWZ</option>
+			 </select>
+			<div class="chosen-container chosen-container-multi chosen-container-active" title="" >
+				<div class="chosen-drop">
+					<ul class="chosen-results">
+						<li class="active-result" data-option-array-index="1">S1: ZOMBICIDE</li>		
+						<li class="active-result" data-option-array-index="2">WALK OF THE DEAD</li>
+						<li class="active-result" data-option-array-index="3">ZOMBIE DOGS</li>		
+						<li class="active-result" data-option-array-index="4">TOXIC CITY MALL</li>		
+						<li class="active-result" data-option-array-index="5">S2: PRISON OUTBREAK</li>	
+						<li class="active-result" data-option-array-index="6">WALK OF THE DEAD #2</li>	
+						<li class="active-result" data-option-array-index="7">TOXIC CROWD</li>		
+						<li class="active-result" data-option-array-index="8">ANGRY ZOMBIES</li>	
+						<li class="active-result" data-option-array-index="9">S3: RUE MORGUE</li>		
+						<li class="active-result" data-option-array-index="10">ANGRY NEIGHBORS</li>	
+						<li class="active-result" data-option-array-index="11">LOST ZOMBIVORS</li>	
+						<li class="active-result" data-option-array-index="12">VIP #1</li>	
+						<li class="active-result" data-option-array-index="13">VIP #2</li>	
+						<li class="active-result" data-option-array-index="14">MURDER OF CROWZ</li>	
+					</ul>
+				</div>
+			</div>	
+	</div> <!-- End SelectMulti -->
 
+	
+	<button type="button" id="start-invasion">Démarrer l'invasion</button>
+	<button type="button" id="start-cartes">0 Cartes</button>
+	<p id='start-message'></p>
+</div> <!-- End header -->
 
-<div id="totaux">	
-		<input type="text" id="current" value="0" disabled ></input>
-		/
-		<input type="text" id="max" value="0" disabled ></input>		
-</div>
+<div id="espace-jeux" style="display:none">
 
-<div id="navigation">
-	<ul>
-		<li><button type="button" id="pre" disabled>Précedent</button></li>
-		<li><button type="button" id="sui" disabled>Suivant</button></li>
-		<li><button type="button" id="fin" disabled>Fin apparition</button></li>
-	</ul>
-</div>
-</div>
-
-
-<div id="Pioche"></div>
-
-
-
-<div id="Conteneur_Animation">
-	<div class="dos"><img  class="carte" src="assets/images/recto.jpg"></div>
-	<div id="Animation">
-		<div class="front"><img  class="carte" src="assets/images/recto.jpg"></div>
-		<div class="back"></div>
-		<!-- <img id="carte_16" class="carte" src="img/spawn/16.jpg"> -->
+	<h1>ZOMBIvasion</h1>
+	
+	<div id="invastion-statut">
+		<h4>Statut de l'invasion</h4>
+			<div class="statut-input">
+				<label for="cartes-restantes">Cartes restantes</label>
+				<input type="text" id="cartes-restantes" value="0" disabled ></input>
+			</div>
+			<div class="statut-input">
+				<label for="cartes-totales">Total carte</label>
+				<input type="text" id="cartes-totales" value="0" disabled ></input>
+			</div>		
+			<div class="statut-input">
+				<label for="max">Niveau de danger</label>
+				<input type="text" id="danger" value="" disabled class="danger-bleu" ></input>
+			</div>		
+			<div  class="statut-button">
+				<button type="button" id="invasion-carte-suivante">Span Suivant</button>
+			</div>
+			<div  class="statut-button">
+				<button type="button" id="invasion-spawn" >Fin du Spawn</button>
+			</div>
 	</div>
-	<!-- <div class="fin"></div> -->
-</div>
+
+	<!-- Espace pioche -->
+	<div id="invasion-pioche"></div>
 
 
 
+	<div id="Conteneur_Animation">
+		<div id="dos">
+			<img  class="carte_m" src="assets/images/recto.jpg">
+		</div>
+		<div id="Animation">
+			<div class="front"><img  class="carte_m" src="assets/images/recto.jpg"></div>
+			<div class="back"></div>
+		</div>
+		<div id="resultat"></div>
+	</div>
 
-<div id="Defausse"></div>
+	<div id="invasion-defausse"></div>
+	
+	<p id='invasion-message'> </p>
 
+</div> <!-- End EspaceDeJeux -->
 
 	<!-- ceci est votre template de base -->
 	<script type="text/javascript" src="lib/jquery-3.4.1.js"></script>
-	<script type="text/javascript" src="lib/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="lib/chosen.jquery.js"></script>
 	<script type="text/javascript" src="lib/zombinvasion.js"  charset="utf-8"></script>
 	<script type="text/javascript" >
-			
+
 	</script>
 </body>
 </html>
